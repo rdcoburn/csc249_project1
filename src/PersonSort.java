@@ -1,9 +1,11 @@
 /**
+ * Person.java
  * 
+ * CSC249 Project1
  */
 
 /**
- * @author dburns
+ * @author R. Darren Coburn
  *
  */
 public class PersonSort {
