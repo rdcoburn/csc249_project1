@@ -1,0 +1,29 @@
+
+public class Person implements Comparable<Person> {
+
+	private String name;
+	private MyDate birthday;
+
+	public Person(String name, MyDate birthday) {
+		this.name = name;
+		this.birthday = birthday;
+
+	}
+
+	public int compareTo(Person person1) {
+		if (this.birthday.compareTo(person1.birthday) == 0) {
+			return this.name.compareTo(person1.name);
+		} else {
+			return this.birthday.compareTo(person1.birthday);
+
+		}
+
+	}
+
+	public String toString() {
+
+		return this.name + " " + this.birthday.toString();
+
+	}
+
+}
