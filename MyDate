@@ -1,0 +1,39 @@
+public class MyDate implements Comparable<MyDate> {
+
+	private int month;
+	private int day;
+	private int year;
+
+
+	public MyDate(int month, int day, int year) {
+		this.month = month;
+		this.day = day;
+		this.year = year;
+	}
+
+	public int compareTo(MyDate date) {
+		int fullDate1 = ((this.year * 100) + (this.month))*100 + this.day;
+		int fullDate2 = ((date.year * 100) + (date.month))*100 + date.day;
+
+		if (fullDate1 > fullDate2) {
+			return 1;
+		}
+		if (fullDate1 < fullDate2) {
+			return -1;
+		}
+
+		return 0;
+	}
+
+	public String toString() {
+		String myDate = "";
+		myDate += Integer.toString(this.month);
+		myDate += ("/" + Integer.toString(this.day));
+		myDate += ("/" + Integer.toString(this.year));
+		
+		return myDate;
+	}
+
+
+
+}
