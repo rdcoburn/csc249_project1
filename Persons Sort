@@ -1,0 +1,60 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class PersonSort {
+
+	static final String PERSON_FILE = ".\\src\\Persons.txt";
+
+	public static void main(String[] args) throws FileNotFoundException {
+		ArrayList<Person> persons = new ArrayList<Person>();
+		File filename = new File(PERSON_FILE);
+		persons = populate(filename, persons);
+		persons = bubbleSort(persons);
+	
+
+	}
+
+	public static ArrayList<Person> populate(File filename,
+			ArrayList<Person> persons) throws FileNotFoundException {
+		int i = 0;
+		Scanner console = new Scanner(filename);
+		while (console.hasNext()) {
+			String name = console.next();
+			int month = console.nextInt();
+			int day = console.nextInt();
+			int year = console.nextInt();
+			MyDate birthday = new MyDate(month, day, year);
+			Person person = new Person(name, birthday);
+			persons.add(i, person);
+
+		}
+
+		return persons;
+
+	}
+
+	public static ArrayList<Person> bubbleSort(ArrayList<Person> persons) {
+
+		boolean swapped = true;
+	      int j = 0;
+	      Person tmp;
+	      while (swapped) {
+	        	swapped = false;
+	        	j++;
+	            for (int i = 0; i < persons.size() - j; i++) {                              	     
+	                  if (persons.get(i).compareTo(persons.get(i + 1)) == -1) {                          
+	                    	tmp = persons.get(i);
+	                    	persons.set(i, persons.get(i + 1));
+	                    	persons.set(i + 1, tmp);
+	                    	swapped = true;
+	                  }
+	        	}                
+	  	}
+
+		return persons;
+
+	}
+
+}
