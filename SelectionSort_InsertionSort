@@ -1,0 +1,169 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+/*
+* This program is the selection and insertion sort. To add additional sorts:  
+* simply add a new populate method and your sort mehtod.
+* 
+*/
+
+public class PersonSorter
+{
+
+    //Declare file variable and name
+    static final String PERSON_FILE = ".\\src\\Persons"; //File was created in IntelliJ, removed file extension .txt
+    static final String PERSON_32_RANDOM_FILE = ".\\src\\PersonsInsert";
+
+    //main
+    public static void main(String[] args) throws IOException, NullPointerException, FileNotFoundException
+    {
+        ArrayList<Person> list = new ArrayList<Person>();
+
+        populate(list); //populates the infile input objects
+        sort(list);     //Sorts the file objects in ascending order
+
+        //prints the list of selection sort objects
+        System.out.println("Selection Sort");
+        System.out.println("--------------------");
+        for(Person ppl: list)
+        {
+            System.out.print(ppl + "\n");
+        }
+
+
+
+        //get a list of random persons 32
+        List<Person> persons= populatePersonDataFromFile(PERSON_32_RANDOM_FILE);
+
+        //show the number of comparisons using the insertion sort
+        System.out.println(InsertionSort(persons) +"\n");
+
+        //prints the list of insertion sort objects
+        System.out.println("Insertion Sort");
+        System.out.println("--------------------");
+        for(Person ppl: persons)
+        {
+            System.out.println(ppl);
+        }
+    }
+
+    //Method to populate data from the Person.txt file
+    public static ArrayList populate(ArrayList<Person> list)
+    {
+
+        try
+        {
+            //Create a scanner to open the files
+            Scanner input = new Scanner(new File(PERSON_FILE));
+
+            //Declare variables
+            String name = " ";
+            int m = 0, d = 0, y = 0;
+
+            //Create loop to check for file contents until all contents are checked
+            while (input.hasNext())
+            {
+                name = input.next();
+                m = input.nextInt();
+                d = input.nextInt();
+                y = input.nextInt();
+
+                //implement person class with variables
+                Person data = new Person(name, m, d, y);
+                list.add(data);
+            }
+
+            input.close(); //close the input file
+
+        }
+        catch (IOException e)
+        {
+            //Prints exception if file cannot be opened, and gives cause
+            System.out.println("File cannot be read.\n" + e.getCause());
+        }
+        return list;
+    }
+
+    //Method to populate data from a file where the name of the file is passed in parameters
+    public static List<Person> populatePersonDataFromFile(String fileName)
+    {
+        //create an empty list
+        List<Person> list = new ArrayList<Person>();
+        try
+        {
+            //Create a scanner to open the files
+            Scanner input = new Scanner(new File(fileName));
+
+            //Declare variables
+            String name = "";
+            int month = 0, day = 0, year = 0;
+
+            //Create loop to check for file contents until all contents are checked
+            while (input.hasNext())
+            {
+                name = input.next();
+                month = input.nextInt();
+                day = input.nextInt();
+                year = input.nextInt();
+
+                //implement person class with variables
+                Person data = new Person(name, month, day, year);
+                list.add(data);
+            }
+            input.close(); //close the input file
+
+        }
+        catch (IOException e)
+        {
+            //Prints exception if file cannot be opened, and gives cause
+            System.out.println("File cannot be read.\n" + e.getCause());
+        }
+        return list;
+    }
+
+
+
+    //Method for sorting the populated file list
+    public static void sort(ArrayList<Person> list)
+    {
+        //Creates collections objects for comparing all objects.
+        Collections.sort(list, new Comparator<Person>()
+        {
+            @Override
+            public int compare(Person o1, Person o2)
+            {
+                return  (o1.getBirthday()).compareTo(o2.getBirthday());
+            }
+        });
+
+    }
+
+    //this method sorts a list of persons using the insertion sort and returns the number of access
+    public static long InsertionSort(List<Person> persons)
+    {
+        long numberOfAccess = 0;
+        int j;       // the number of items sorted so far
+        int i;
+        Person key;  // the item to be inserted
+
+        for (j = 1 ; j < persons.size() ; j++)    // Start with 1 (not 0)
+        {
+            key = persons.get(j);
+            for(i = j - 1; (i >= 0) && (persons.get(i).compareTo(key) > 0); i--)   // Smaller values are moving up
+            {
+                numberOfAccess++;
+                persons.set(i + 1, persons.get(i));
+            }
+            numberOfAccess++;
+            persons.set(i + 1, key);  // Put the key in its proper location
+        }
+        return numberOfAccess;
+    }
+
+}
